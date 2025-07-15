@@ -1,0 +1,38 @@
+# Arquivos de estado do Terraform
+*.tfstate
+*.tfstate.backup
+
+# Diretório de estado local
+.terraform/
+
+# Arquivos de plano de execução
+*.tfplan
+
+# Logs e saída temporária
+crash.log
+*.log
+
+# Override local de variáveis
+terraform.tfvars
+*.tfvars
+
+# Sensível: arquivos com variáveis locais e segredos
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Lock file do provider (só ignore se for gerado em ambientes locais e não controlado)
+.terraform.lock.hcl
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*~
+*.txt
+
+# MacOS e Linux
+.DS_Store
+*.bak
+
+# Outros arquivos
+*.zip
