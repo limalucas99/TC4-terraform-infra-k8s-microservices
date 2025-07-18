@@ -40,8 +40,8 @@ resource "aws_db_instance" "kitchen_service_db" {
   engine                  = "postgres"
   instance_class          = "db.t3.micro"
   allocated_storage       = 10
-  username                = "lucas"
-  password                = "12345678"  
+  username                = var.kitchen_db_username
+  password                = var.kitchen_db_password
   publicly_accessible     = true
 
   db_subnet_group_name    = aws_db_subnet_group.db_subnet_group.name
