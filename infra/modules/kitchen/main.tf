@@ -51,3 +51,19 @@ resource "aws_db_instance" "kitchen_service_db" {
   storage_encrypted       = true
 }
 
+resource "aws_secretsmanager_secret" "kitchen_db_secret" {
+  name        = "kitchen-db-secret"
+  description = "Credenciais e endpoint do banco de dados Kitchen Service"
+}
+
+resource "aws_secretsmanager_secret_version" "kitchen_db_secret_version" {
+  secret_id     = aws_secretsmanager_secret.kitchen_db_secret.id
+  secret_string = jsonencode({
+    username = var.kitchen_db_username,
+    password = var.kitchen_db_password,
+    db_host = aws_db_instance.kitchen_service_db.address,
+    db_name  = aws_db_instance.kitchen_service_db.db_name
+  })
+}
+
+

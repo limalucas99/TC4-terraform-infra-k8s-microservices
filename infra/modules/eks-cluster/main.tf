@@ -80,3 +80,16 @@ resource "aws_eks_node_group" "k8s_node_group" {
 
   timeouts { create = "30m" }
 }
+
+resource "aws_secretsmanager_secret" "k8s_secret" {
+  name        = "k8s-db-secret"
+  description = "Credenciais do Cluster EKS para k8s"
+}
+
+resource "aws_secretsmanager_secret_version" "k8s_secret_version" {
+  secret_id     = aws_secretsmanager_secret.k8s_secret.id
+  secret_string = jsonencode({
+    endpoint = aws_eks_cluster.k8s_cluster.endpoint,
+    id = aws_eks_cluster.k8s_cluster.id,
+  })
+}

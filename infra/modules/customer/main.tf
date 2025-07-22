@@ -51,3 +51,18 @@ resource "aws_db_instance" "customer_service_db" {
   storage_encrypted       = true
 }
 
+resource "aws_secretsmanager_secret" "customer_db_secret" {
+  name        = "customer-db-secret"
+  description = "Credenciais e endpoint do banco de dados Customer Service"
+}
+
+resource "aws_secretsmanager_secret_version" "customer_db_secret_version" {
+  secret_id     = aws_secretsmanager_secret.customer_db_secret.id
+  secret_string = jsonencode({
+    username = var.customer_db_username,
+    password = var.customer_db_password,
+    db_host = aws_db_instance.customer_service_db.address,
+    db_name  = aws_db_instance.customer_service_db.db_name
+  })
+}
+

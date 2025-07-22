@@ -32,3 +32,17 @@ resource "mongodbatlas_database_user" "db_user" {
     database_name = "admin"
   }
 }
+
+resource "aws_secretsmanager_secret" "payment_db_secret" {
+  name        = "payment-db-secret"
+  description = "Credenciais e endpoint do banco de dados Payment Service"
+}
+
+resource "aws_secretsmanager_secret_version" "payment_db_secret_version" {
+  secret_id     = aws_secretsmanager_secret.payment_db_secret.id
+  secret_string = jsonencode({
+    username = var.payment_db_username,
+    password = var.payment_db_password,
+    db_host = mongodbatlas_advanced_cluster.tc4_mongodb_cluster.connection_strings[0].standard_srv,
+  })
+}
