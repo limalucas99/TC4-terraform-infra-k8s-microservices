@@ -1,7 +1,9 @@
 name: Validate terraform infrastructure
 
 on:
-    workflow_dispatch:
+    pull_request:
+      branches:
+        - main
 jobs:
   terraform:
     runs-on: ubuntu-latest
